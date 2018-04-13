@@ -1,0 +1,63 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/polymer/lib/elements/dom-if.html">
+
+<dom-module id="create-user">
+    <template>
+
+        <template is="dom-if" if="{{show}}">
+
+            <div class="tile">
+                <edit-user id="edit-user"></edit-user>
+                <button on-click="handleClick">
+                    SUBMIT
+                </button>
+            </div>
+        </template>
+
+    </template>
+    <script>
+        class UserForm extends Polymer.Element {
+            static get is() {
+                return 'create-user'
+            }
+
+            constructor() {
+                super();
+                this.show = true
+            }
+
+            static get properties() {
+                return {
+                    show: {
+                        type: Boolean,
+                        value: true
+                    }
+                }
+            }
+
+            hide() {
+                this.show = false;
+            }
+
+            display() {
+                this.show = true;
+            }
+
+
+            handleClick() {
+                let userToCreate = this.shadowRoot.getElementById('edit-user')._constructUserObjectToUpdate();
+                baseTraverson.newRequest().follow('users').convertResponseToObject().post(userToCreate,
+                    function (error, response) {
+                        if (error) {
+                            console.error(error);
+                        } else {
+                            UserService.setCurrentUser(response);
+                        }
+                    });
+            }
+
+        }
+
+        customElements.define(UserForm.is, UserForm);
+    </script>
+</dom-module>

@@ -1,0 +1,62 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="edit-user">
+    <template>
+        <input type="text" placeholder="{{placeholderUser.username}}" value="{{username::input}}">
+        <input type="text" placeholder="{{placeholderUser.firstname}}" value="{{firstname::input}}">
+        <input type="text" placeholder="{{placeholderUser.lastname}}" value="{{lastname::input}}">
+        <input type="text" placeholder="{{placeholderUser.city}}" value="{{city::input}}">
+    </template>
+    <script>
+        class EditUserComponent extends Polymer.Element {
+            static get is() {
+                return 'edit-user'
+            }
+
+            constructor() {
+                super();
+                if (!this.placeholderUser) {
+                    this.placeholderUser = {
+                        username: "username",
+                        lastname: "lastname",
+                        firstname: "firstname",
+                        city: "city"
+                    }
+                }
+            }
+
+            static get properties() {
+                return {
+                    username: {
+                        type: String,
+                        notify: true
+                    },
+                    lastname: {
+                        type: String,
+                        notify: true
+                    },
+                    firstname: {
+                        type: String,
+                        notify: true
+                    },
+                    city: {
+                        type: String,
+                        notify: true
+                    }
+                }
+            }
+
+
+            _constructUserObjectToUpdate() {
+                return {
+                    username: this.username,
+                    lastname: this.lastname,
+                    firstname: this.firstname,
+                    city: this.city
+                };
+            }
+        }
+
+        customElements.define(EditUserComponent.is, EditUserComponent)
+    </script>
+</dom-module>

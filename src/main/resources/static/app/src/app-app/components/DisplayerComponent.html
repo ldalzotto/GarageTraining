@@ -1,0 +1,34 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/polymer/lib/utils/render-status.html">
+
+
+<dom-module id="displayer-component">
+    <template>
+        <div></div>
+    </template>
+    <script>
+        class DisplayerComponent extends Polymer.Element {
+            static get is() {
+                return 'displayer-component'
+            }
+
+            constructor() {
+                super();
+                Polymer.RenderStatus.afterNextRender(this, function () {
+                    this.createUserComponent = document.getElementById(UserForm.is);
+                    this.userLoginComponent = document.getElementById(UserLogin.is);
+                    this.tabDisplayerComponent = document.getElementById(TabDisplayer.is);
+                })
+            }
+
+            currentUserPresent() {
+                this.createUserComponent.hide();
+                this.userLoginComponent.hide();
+                this.tabDisplayerComponent.display();
+            }
+
+        }
+
+        customElements.define(DisplayerComponent.is, DisplayerComponent)
+    </script>
+</dom-module>

@@ -1,0 +1,71 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/polymer/lib/elements/dom-if.html">
+
+
+<dom-module id="user-login">
+    <template>
+
+
+        <template is="dom-if" if="{{show}}">
+            <div class="tile">
+                <input type="text" value="{{username::input}}" placeholder="Username">
+                <button on-click="submitLogin">LOGIN</button>
+            </div>
+        </template>
+    </template>
+
+    <script>
+        class UserLogin extends Polymer.Element {
+            static get is() {
+                return 'user-login'
+            }
+
+            constructor() {
+                super();
+                this.username = '';
+                this.show = true;
+            }
+
+            static get properties() {
+                return {
+                    username: {
+                        type: String
+                    },
+                    show: {
+                        type: Boolean,
+                        value: true
+                    }
+                }
+            }
+
+            hide() {
+                this.show = false;
+            }
+
+            display() {
+                this.show = true;
+            }
+
+            submitLogin() {
+                baseTraverson.newRequest().follow('loginEvents').convertResponseToObject().post({
+                    'username': this.username
+                }, function (error, data) {
+                    if (error) {
+                        console.error(error)
+                    } else {
+                        traverson.from(data['_links']['user']['href']).convertResponseToObject().getResource(function (error, data) {
+                            if (error) {
+                                console.error(error)
+                            } else {
+                                UserService.setCurrentUser(data);
+                            }
+                        })
+                    }
+                })
+            }
+
+        }
+
+        customElements.define(UserLogin.is, UserLogin)
+    </script>
+</dom-module>

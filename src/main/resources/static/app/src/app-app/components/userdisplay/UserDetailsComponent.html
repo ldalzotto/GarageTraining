@@ -1,0 +1,120 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../../bower_components/polymer/lib/elements/dom-if.html">
+
+<dom-module id="user-details">
+
+    <template>
+        <div on-show="_refreshUser">
+            <div id="user-display"></div>
+            <div id="garage-overviews">
+                <template is="dom-if" if="{{!inEditMode}}">
+                    <div>Username : [[currentUser.username]]</div>
+                    <div>Firstname : [[currentUser.firstname]]</div>
+                    <div>Lastname : [[currentUser.lastname]]</div>
+                    <div>City : [[currentUser.city]]</div>
+                </template>
+
+                <template is="dom-if" if="{{inEditMode}}">
+                    <edit-user placeholder-user="{{currentUser}}" id="edit-user"></edit-user>
+                </template>
+
+                <div id="garage-nb">Garages numbers : [[currentUser.carnumber]]</div>
+            </div>
+            <!-- Adding EDIT box when clicked here -->
+            <template is="dom-if" if="{{!inEditMode}}">
+                <button on-click="_enterInEditMode">
+                    Edit
+                </button>
+            </template>
+            <template is="dom-if" if="{{inEditMode}}">
+                <button on-click="_updateUserDetails">
+                    Submit Edition
+                </button>
+                <button on-click="_outOfEditMode">
+                    Cancel Edition
+                </button>
+            </template>
+            <template is="dom-if" if="{{updateUserInError}}">
+                <div>An error occured while updating user data.</div>
+            </template>
+        </div>
+
+    </template>
+    <script>
+        class UserDetailsComponent extends Polymer.Element {
+            static get is() {
+                return 'user-details'
+            }
+
+            constructor() {
+                super();
+                this.currentUser = UserService.getCurrentUser();
+                this.inEditMode = false;
+                this.updateUserInError = false;
+                this._refreshUser();
+            }
+
+            static get parameters() {
+                return {
+                    currentUser: {
+                        type: Object
+                    },
+                    inEditMode: {
+                        type: Boolean
+                    },
+                    updateUserInError: {
+                        type: Boolean
+                    }
+                }
+            }
+
+            _refreshUser() {
+                let UserDetailsComponentInstance = this;
+                traverson.from(this.currentUser['_links']['user']['href']).jsonHal().withRequestOptions({qs: {projection: 'userWithCarNumber'}})
+                    .getResource(function (error, doc) {
+                        if (error) {
+                            console.error(error);
+                        }
+                        UserDetailsComponentInstance.currentUser = doc;
+                    });
+            }
+
+            _enterInEditMode() {
+                this.inEditMode = true
+            }
+
+            _outOfEditMode() {
+                this.inEditMode = false
+            }
+
+            _updateUserDetails() {
+                let UserDetailsComponentInstance = this;
+                //call service
+                let userToPatch = this.shadowRoot.getElementById('edit-user')._constructUserObjectToUpdate();
+                traverson.from(this.currentUser['_links']['user']['href']).jsonHal().convertResponseToObject().patch(userToPatch,
+                    function (error, data) {
+                        if (error) {
+                            console.error(error);
+                            UserDetailsComponentInstance.updateUserInError = true;
+                            setTimeout(function () {
+                                UserDetailsComponentInstance.updateUserInError = false;
+                            }, 1000)
+                        } else {
+                            UserDetailsComponentInstance._refreshUser();
+                        }
+                        UserDetailsComponentInstance.inEditMode = false;
+                    });
+            }
+
+            static get properties() {
+                return {
+                    currentUser: {
+                        type: Object
+                    }
+                }
+            }
+        }
+
+        customElements.define(UserDetailsComponent.is, UserDetailsComponent)
+    </script>
+</dom-module>

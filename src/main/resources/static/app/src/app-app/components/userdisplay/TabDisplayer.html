@@ -1,0 +1,96 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../../bower_components/polymer/lib/elements/dom-if.html">
+
+<dom-module id="tab-displayer">
+    <template>
+
+        <template is="dom-if" if="{{show}}">
+            <div id="tab-1" class="mdl-layout__tab is-active">Tab1 - User</div>
+            <div id="tab-2" class="mdl-layout__tab">Tab2 - Garage</div>
+            <div id="tab-3" class="mdl-layout__tab">Tab3 - Cars</div>
+
+
+            <template is="dom-if" if="{{_currentTabEqualsToUser(currentTab)}}">
+                <user-details id="user-details"></user-details>
+                <button on-click="_switchToGarage">Managing Garages</button>
+            </template>
+            <template is="dom-if" if="{{_currentTabEqualsToGarage(currentTab)}}">
+            </template>
+            <template is="dom-if" if="{{_currentTabEqualsToCar(currentTab)}}">
+            </template>
+        </template>
+    </template>
+    <script>
+
+        let TabDisplayerConstants = (function () {
+            return {
+                USER_TAB: "user",
+                GARAGE_TAB: "garage",
+                CARS_TAB: "cars"
+            }
+        })();
+
+        class TabDisplayer extends Polymer.Element {
+            static get is() {
+                return 'tab-displayer'
+            }
+
+            constructor() {
+                super();
+                this.currentTab = TabDisplayerConstants.USER_TAB;
+                this.show = false;
+            }
+
+            static get properties() {
+                return {
+                    currentTab: {
+                        type: String,
+                        value: TabDisplayerConstants.USER_TAB
+                    },
+                    show: {
+                        type: Boolean,
+                        value: false
+                    }
+                }
+            }
+
+
+            hide() {
+                this.show = false;
+            }
+
+            display() {
+                this.show = true;
+            }
+
+            setCurrentTab(value) {
+                this.currentTab = value;
+            }
+
+            _switchToGarage() {
+                this.currentTab = TabDisplayerConstants.GARAGE_TAB;
+            }
+
+            _currentTabEqualsToUser(currentTab) {
+                if (currentTab == TabDisplayerConstants.USER_TAB) {
+                    if (document.getElementById(UserDetailsComponent.is) != null) {
+                        this.userDetailsComponent._refreshUser();
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            _currentTabEqualsToGarage(currentTab) {
+                return currentTab == TabDisplayerConstants.GARAGE_TAB;
+            }
+
+            _currentTabEqualsToCar(currentTab) {
+                return currentTab == TabDisplayerConstants.CARS_TAB;
+            }
+
+        }
+
+        customElements.define(TabDisplayer.is, TabDisplayer)
+    </script>
+</dom-module>

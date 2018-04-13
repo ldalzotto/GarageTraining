@@ -1,0 +1,113 @@
+{
+  "name": "traverson",
+  "version": "6.0.3",
+  "description": "Hypermedia API/HATEOAS client for Node.js and the browser",
+  "repository": "https://github.com/traverson/traverson.git",
+  "main": "traverson.js",
+  "author": {
+    "name": "Bastian Krol",
+    "email": "bastian.krol@web.de"
+  },
+  "contributors": [
+    {
+      "name": "Julien Leroy",
+      "email": "julien.yo@gmail.com"
+    },
+    {
+      "name": "Ricardo Costa",
+      "email": "rdscosta@gmail.com"
+    },
+    {
+      "name": "Michael Tiller",
+      "email": "michael.tiller@gmail.com"
+    },
+    {
+      "name": "subvertnormality",
+      "email": "andy@subvertnormality.com"
+    },
+    {
+      "name": "Craig Spaeth",
+      "email": "craigspaeth@gmail.com"
+    },
+    {
+      "name": "Chad Lee",
+      "email": "git@chadly.net"
+    },
+    {
+      "name": "Max F. Albrecht",
+      "email": "1@178.is"
+    },
+    {
+      "name": "dimik",
+      "email": "dimik@yandex.ru"
+    },
+    {
+      "name": "Jade Montagu",
+      "email": "jade@jademontagu.com"
+    },
+    {
+      "name": "Igor Unanua",
+      "email": "igor@hdivsecurity.com"
+    }
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "grunt",
+    "mocha": "mocha",
+    "build": "grunt"
+  },
+  "keywords": [
+    "JSON",
+    "REST",
+    "API",
+    "HATEOAS",
+    "hypertext",
+    "hypermedia",
+    "HAL"
+  ],
+  "dependencies": {
+    "jsonpath-plus": "^0.16.0",
+    "minilog": "^3.0.0",
+    "request": "^2.28.0",
+    "resolve-url": "^0.2.1",
+    "superagent": "^3.3.1",
+    "underscore.string": "^3.3.4",
+    "url-template": "^2.0.4"
+  },
+  "devDependencies": {
+    "brfs": "^1.1.1",
+    "btoa": "^1.1.2",
+    "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.0.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-mocha": "^1.0.2",
+    "grunt-mocha-test": "^0.13.2",
+    "load-grunt-tasks": "^3.5.0",
+    "mocha": "^3.0.2",
+    "poll-forever": "^1.0.0",
+    "proxyquire": "^1.7.1",
+    "proxyquire-universal": "^1.0.8",
+    "proxyquireify": "^3.0.0",
+    "sinon": "^1.9.1",
+    "sinon-chai": "^2.5.0",
+    "traverson-mock-response": "1.1.0",
+    "traverson-test-server": "1.8.1"
+  },
+  "browser": {
+    "minilog": "./browser/lib/shim/log.js",
+    "request": "./browser/lib/shim/request.js",
+    "util": "./browser/lib/shim/node-util.js",
+    "underscore.string": "./browser/lib/shim/underscore-string-reduced.js",
+    "../server/app": false,
+    "indexof": false,
+    "emitter": false,
+    "reduce": false,
+    "traverson-test-server": false,
+    "url": "./browser/lib/shim/url-resolve.js"
+  }
+}

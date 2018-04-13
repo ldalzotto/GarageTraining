@@ -1,0 +1,69 @@
+{
+  "name": "traverson-hal",
+  "version": "6.0.0",
+  "description": "HAL (hypertext application language) adapter for Traverson",
+  "repository": "https://github.com/basti1302/traverson-hal.git",
+  "author": {
+    "name": "Bastian Krol",
+    "email": "bastian.krol@web.de"
+  },
+  "contributors": [
+    {
+      "name": "Matt Travi",
+      "email": "programmer@travi.org",
+      "url": "http://travi.org"
+    },
+    {
+      "name": "Michael Buckley",
+      "email": "michael@ntree.com"
+    },
+    {
+      "name": "Adam Szaraniec"
+    }
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "grunt",
+    "mocha": "mocha",
+    "build": "grunt"
+  },
+  "keywords": [
+    "JSON",
+    "REST",
+    "API",
+    "HATEOAS",
+    "hypertext",
+    "hypermedia",
+    "HAL"
+  ],
+  "peerDependencies": {
+    "traverson": "^6.0.1"
+  },
+  "dependencies": {
+    "halfred": "1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.0.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-mocha": "^1.0.2",
+    "grunt-mocha-test": "^0.13.2",
+    "load-grunt-tasks": "^3.5.0",
+    "mocha": "^3.0.1",
+    "poll-forever": "^1.0.0",
+    "request": "^2.72.0",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0",
+    "traverson": "^6.0.1",
+    "traverson-mock-response": "1.1.0",
+    "traverson-test-server": "1.8.1"
+  },
+  "browser": {
+    "traverson-test-server": false
+  }
+}
